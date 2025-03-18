@@ -5,8 +5,9 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":services:serviceA:client"))
-    implementation(project(":services:serviceB:client"))
+    // implementation(project(":services:serviceA:client"))
+    // implementation(project(":services:serviceB:client"))
+    implementation(project(":services:serviceC"))
     implementation("org.springframework.boot:spring-boot-starter")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

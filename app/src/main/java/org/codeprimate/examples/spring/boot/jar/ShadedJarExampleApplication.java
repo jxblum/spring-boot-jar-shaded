@@ -1,5 +1,7 @@
 package org.codeprimate.examples.spring.boot.jar;
 
+import com.codeprimate.examples.spring.boot.jar.serviceC.client.GreetingService;
+
 import org.codeprimate.examples.spring.boot.jar.serviceA.client.MessageService;
 import org.codeprimate.examples.spring.boot.jar.serviceB.client.PersonalizationService;
 import org.springframework.boot.ApplicationRunner;
@@ -29,17 +31,23 @@ public class ShadedJarExampleApplication {
 	static class ShadedJarExampleConfiguration {
 
 		@Bean
+		GreetingService greetingService(MessageService messageService, PersonalizationService personalizationService) {
+			return new GreetingService(messageService, personalizationService);
+		}
+
+		@Bean
 		MessageService messageService() {
 			return MessageService.hello();
 		}
 
+		@Bean
 		PersonalizationService personalizationService() {
 			return PersonalizationService.username();
 		}
 	}
 
 	@Bean
-	ApplicationRunner programRunner(MessageService messageService, PersonalizationService personalizationService) {
-		return args -> System.out.printf("%s%n", personalizationService.personalize(messageService.message()));
+	ApplicationRunner programRunner(GreetingService greetingService) {
+		return args -> System.out.printf("%s%n", greetingService.greet());
 	}
 }
