@@ -1,5 +1,8 @@
 plugins {
 	java
+	id("org.springframework.boot") version "3.4.3" apply false
+	id("io.spring.dependency-management")
+
 }
 
 java {
@@ -14,8 +17,17 @@ allprojects {
 }
 
 subprojects {
+
+	apply(plugin = "io.spring.dependency-management")
+
 	repositories {
 		mavenCentral()
+	}
+
+	dependencyManagement {
+		imports {
+ 			mavenBom(org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES)
+		}
 	}
 }
 
